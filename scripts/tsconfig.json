@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": { "*": ["types/*"] },
+    "module": "commonjs",
+    "target": "es2017",
+    "esModuleInterop": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "declaration": false,
+    "sourceMap": false,
+    "moduleResolution": "node",
+    "stripInternal": true,
+    "pretty": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "plugins": [
+      {
+        "name": "tslint-language-service"
+      }
+    ],
+    "lib": ["es2017"]
+  },
+  "exclude": ["../node_modules"]
+}

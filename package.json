@@ -1,0 +1,44 @@
+{
+  "name": "deployments-map",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "24.0.15",
+    "@types/node": "12.0.8",
+    "@types/react": "16.8.20",
+    "@types/react-dom": "16.8.4",
+    "decentraland-ui": "^2.6.4",
+    "isomorphic-fetch": "^2.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "3.0.1",
+    "ts-node": "^8.3.0",
+    "typescript": "3.5.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "download": "npm run download:ropsten && npm run download:mainnet",
+    "download:ropsten": "ROPSTEN=1 ts-node --project=scripts/tsconfig.json scripts/download",
+    "download:mainnet": "ts-node --project=scripts/tsconfig.json scripts/download",
+    "deploy": "npm run build && now alias $(now build --public) deployment-map"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "0.0.35"
+  }
+}
