@@ -23,7 +23,7 @@ type ScenesResponse = {
   data: {
     parcel_id: string
     root_cid: string
-    scene_id: string
+    scene_cid: string
   }[]
 }
 
@@ -44,10 +44,10 @@ async function batch(
     const res = await fetch(req)
     const { data } = (await res.json()) as ScenesResponse
     for (const mapping of data) {
-      const { parcel_id, root_cid } = mapping
+      const { parcel_id, root_cid, scene_cid } = mapping
       const previous = isRopsten ? deploymentsRopsten : deploymentsMainnet
       if (previous[parcel_id] !== root_cid) {
-        differences.set(parcel_id, root_cid)
+        differences.set(parcel_id, scene_cid)
       }
       deployments.set(parcel_id, root_cid)
     }
@@ -113,15 +113,13 @@ async function main() {
   const differencesFilename = isRopsten
     ? 'differences.ropsten.json'
     : 'differences.mainnet.json'
-  const differencesData = Array.from(differences.entries()).reduce<
-    Record<string, string[]>
-  >((obj, [id, cid]) => {
-    if (!obj[cid]) {
-      obj[cid] = []
-    }
-    obj[cid].push(id)
-    return obj
-  }, {})
+  const differencesData = Array.from(differences.entries()).reduce(
+    (obj, [id, cid]) => {
+      obj[id] = cid
+      return obj
+    },
+    {}
+  )
   console.log(`${Object.keys(differencesData).length} differences`)
   require('fs').writeFileSync(
     `src/data/${differencesFilename}`,
